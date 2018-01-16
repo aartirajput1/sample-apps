@@ -26,14 +26,14 @@ func main() {
 	defer l.Close()
 	fmt.Println("\nListening on " + CONN_HOST + ":" + CONN_PORT)
 
-	ll, err2 := net.Listen(CONN_TYPE, CONN_PORT_2)
+	ll, err2 := net.Listen(CONN_TYPE, ":"+CONN_PORT_2)
 	if err2 != nil {
 		fmt.Println("Error listening:", err2.Error())
 		os.Exit(1)
 	}
 
 	defer ll.Close()
-	fmt.Println("\nListening on " + CONN_HOST + CONN_PORT_2)
+	fmt.Println("\nListening on " + CONN_HOST + ":" + CONN_PORT_2)
 	counter := 0
 
 	for {
@@ -55,7 +55,7 @@ func main() {
 
 		time.Sleep(50 * time.Millisecond)
 		// Stop after first 3 request on port 2.
-		if counter == 3 {
+		if counter == 5 {
 			ll.Close()
 		}
 		go handleRequest(conn1)
