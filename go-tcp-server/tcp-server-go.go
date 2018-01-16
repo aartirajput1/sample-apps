@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"time"
 )
 
 const (
@@ -13,6 +14,7 @@ const (
 )
 
 func main() {
+	fmt.Printf("\nStarting tcp go server...")
 	// Listen for incoming connections.
 	l, err := net.Listen(CONN_TYPE, ":"+CONN_PORT)
 	if err != nil {
@@ -21,7 +23,7 @@ func main() {
 	}
 	// Close the listener when the application closes.
 	defer l.Close()
-	fmt.Println("Listening on " + CONN_HOST + ":" + CONN_PORT)
+	fmt.Println("\nListening on " + CONN_HOST + ":" + CONN_PORT)
 
 	// Listen for incoming connections.
 	ll, err2 := net.Listen(CONN_TYPE, ":4444")
@@ -31,7 +33,7 @@ func main() {
 	}
 	// Close the listener when the application closes.
 	defer ll.Close()
-	fmt.Println("Listening on " + CONN_HOST + ":4444")
+	fmt.Println("\nListening on " + CONN_HOST + ":4444")
 	counter := 0
 
 	for {
@@ -53,8 +55,10 @@ func main() {
 			os.Exit(1)
 		}
 
-		if counter == 10 {
-			fmt.Printf("Stopping second server of port 4444 after 10 request.")
+		time.Sleep(50 * time.Millisecond)
+		fmt.Printf("\nSecond server on port 4444 will stop after %d request.", (5 - counter))
+		if counter == 5 {
+			fmt.Printf("\nStopping second server of port 4444 after completing 5 request.")
 			ll.Close()
 		}
 		// Handle connections in a new goroutine.
@@ -65,14 +69,9 @@ func main() {
 
 // Handles incoming requests.
 func handleRequest(conn net.Conn) {
+
+	time.Sleep(10 * time.Millisecond)
 	fmt.Printf("\nReceived message %s -> %s \n", conn.RemoteAddr(), conn.LocalAddr())
-	// Make a buffer to hold incoming data.
-	buf := make([]byte, 1024)
-	// Read the incoming connection into the buffer.
-	_, err := conn.Read(buf)
-	if err != nil {
-		fmt.Println("Error reading:", err.Error())
-	}
 
 	// Write the message in the connection channel.
 	conn.Write([]byte("Hi there !"))
