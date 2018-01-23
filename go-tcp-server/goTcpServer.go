@@ -15,25 +15,23 @@ const (
 )
 
 func main() {
-	fmt.Printf("\nStarting tcp go server...")
+	fmt.Println("Starting tcp go server...")
 
 	l, err := net.Listen(CONN_TYPE, ":"+CONN_PORT)
 	if err != nil {
 		fmt.Println("Error listening:", err.Error())
 		os.Exit(1)
 	}
-
 	defer l.Close()
-	fmt.Println("\nListening on " + CONN_HOST + ":" + CONN_PORT)
+	fmt.Println("Listening on " + CONN_HOST + ":" + CONN_PORT)
 
 	ll, err2 := net.Listen(CONN_TYPE, ":"+CONN_PORT_2)
 	if err2 != nil {
 		fmt.Println("Error listening:", err2.Error())
 		os.Exit(1)
 	}
-
 	defer ll.Close()
-	fmt.Println("\nListening on " + CONN_HOST + ":" + CONN_PORT_2)
+	fmt.Println("Listening on " + CONN_HOST + ":" + CONN_PORT_2)
 	counter := 0
 
 	for {
@@ -65,7 +63,6 @@ func main() {
 
 // Handles incoming requests.
 func handleRequest(conn net.Conn) {
-	time.Sleep(10 * time.Millisecond)
 	fmt.Printf("\nReceived message %s -> %s \n", conn.RemoteAddr(), conn.LocalAddr())
 
 	conn.Write([]byte("Hi there !"))
