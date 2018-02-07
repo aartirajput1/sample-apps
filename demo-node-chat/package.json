@@ -1,12 +1,8 @@
 {
 "name": "node-mysql",
-  "version": "0.0.1",
+  "version": "<1.0",
   "dependencies": {
     "express": "latest",
-    "mysql": "latest",
-    "socket.io": "",
-    "twitter": "",
-    "socket.io-client": "",
-    "jquery": ""
+    "mysql": "latest"
   }
 }
