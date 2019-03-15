@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/nats-io/nats"
+	nats "github.com/nats-io/go-nats"
 )
 
 func main() {
